@@ -9,12 +9,13 @@ namespace FlagsTest
         [SerializeField] RectTransform SliderTR;
 
         Slider_MiniGame Slider_MiniGame;
+        float Timer;
 
         private void Update ()
         {
             if (Slider_MiniGame != null)
             {
-                float ancorX = Slider_MiniGame.GetSliderValue ();
+                float ancorX = Slider_MiniGame.GetSliderValue (Timer);
 
                 Vector2 ancorMin = SliderTR.anchorMin;
                 Vector2 ancorMax = SliderTR.anchorMax;
@@ -24,20 +25,37 @@ namespace FlagsTest
 
                 SliderTR.anchorMin = ancorMin;
                 SliderTR.anchorMax = ancorMax;
+
+                Timer += Time.deltaTime;
+
+                if (Timer > Slider_MiniGame.SliderMiniGameDescription.MiniGameDuration)
+                {
+                    Slider_MiniGame.FailMinigame ();
+                }
+
+                if (Slider_MiniGame.IsCompleted)
+                {
+                    OnEndMiniGmae (Slider_MiniGame, false);
+                }
             }
+        }
+
+        private void OnDisable ()
+        {
+            Timer = 0;
         }
 
         public override void Initialize (Player player)
         {
             base.Initialize (player);
 
-            GameController.Instance.OnStartMiniGame += OnStartMiniGmae;
-            GameController.Instance.OnEndMiniGame += OnEndMiniGmae;
+            MiniGamesManager.Instance.OnStartMiniGame += OnStartMiniGmae;
+            MiniGamesManager.Instance.OnEndMiniGame += OnEndMiniGmae;
 
             gameObject.SetActive (false);
         }
 
-        void OnStartMiniGmae (MiniGame miniGame)
+        void OnStartMiniGmae (MiniGame miniGame, int seed)
         {
             if (Player == miniGame.Player && miniGame is Slider_MiniGame)
             {
@@ -68,7 +86,7 @@ namespace FlagsTest
 
         public void OnPointerClick (PointerEventData eventData)
         {
-            Slider_MiniGame.OnPress ();
+            Slider_MiniGame.CheckResult (Timer);
         }
     }
 }

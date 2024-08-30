@@ -13,19 +13,15 @@ namespace FlagsTest
         Dictionary<Flag, RectTransform> FlagsSlidersTransforms = new Dictionary<Flag, RectTransform>();
         Camera Camera;
 
-        void Awake ()
-        {
-            _CaptureSliderRef.gameObject.SetActive (false);
-        }
-
         private void Start ()
         {
             Camera = Camera.main;
+            _CaptureSliderRef.gameObject.SetActive (false);
         }
 
         void Update ()
         {
-            foreach (var flag in GameController.Instance.GetAllFlags)
+            foreach (var flag in GameEntity.Instance.GetAllFlags)
             {
                 if (!FlagsSliders.TryGetValue (flag, out var slider))
                 {
@@ -39,7 +35,7 @@ namespace FlagsTest
                 if (flag.CaptureFlagPercent > 0)
                 {
                     slider.value = flag.CaptureFlagPercent;
-                    slider.image.color = flag.EnemyPlayer.TeamColor;
+                    slider.image.color = flag.EnemyTeamColor;
 
                     var pos = (Vector2)Camera.WorldToViewportPoint (flag.Position + _SliderOffsetPosition);
 

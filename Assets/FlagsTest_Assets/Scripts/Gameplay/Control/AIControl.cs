@@ -15,7 +15,10 @@ namespace FlagsTest
             float minSqrDistance = float.MaxValue;
             Flag nearestFlag = null;
 
-            if (TargetFlag && !TargetFlag.InProtected)
+            bool targetTeamFlag = TargetFlag && TargetFlag.InTeam (Player) && (!TargetFlag.InProtected || TargetFlag.EnemyPlayer);
+            bool targetEnemyFlag = TargetFlag && !TargetFlag.InTeam (Player) && !TargetFlag.InProtected && (TargetFlag.EnemyPlayer == null || TargetFlag.EnemyPlayer == Player);
+
+            if (targetTeamFlag || targetEnemyFlag)
             {
                 if ((TargetFlag.Position - Player.Position).sqrMagnitude > SqrMinToFlagForStop)
                 {
@@ -29,9 +32,12 @@ namespace FlagsTest
                 return;
             }
 
-            foreach (var f in GameController.Instance.GetAllFlags)
+            foreach (var f in GameEntity.Instance.GetAllFlags)
             {
-                if (f.InProtected || Player.Team == f.Team && !f.EnemyPlayer)
+                if (f.InProtected || 
+                    Player.InTeam (f) && !f.InCapture ||
+                    !Player.InTeam (f) && f.InCapture
+                    )
                 {
                     continue;
                 }

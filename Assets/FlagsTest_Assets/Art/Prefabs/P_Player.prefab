@@ -9,8 +9,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 9218823640631713910}
-  - component: {fileID: -4203174508218591883}
   - component: {fileID: 7819807498644899279}
+  - component: {fileID: 8861005933809624228}
+  - component: {fileID: -6789886380839430824}
   m_Layer: 0
   m_Name: P_Player
   m_TagString: Untagged
@@ -34,7 +35,42 @@ Transform:
   - {fileID: 3091319898584910651}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &-4203174508218591883
+--- !u!114 &7819807498644899279
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1051247950742112133}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8c05c86500a85e44894f9b77786b312b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _PaintableRenderers:
+  - {fileID: 5160764131419926652}
+  - {fileID: 7107081361234156113}
+  _ViewTransform: {fileID: 3091319898584910651}
+  _MoveSpeed: 10
+  _InterpolationViewSpeed: 10
+  _PlayerRadius: 0.5
+  _SqrMagnitudeForImmediatelyMove: 25
+--- !u!114 &8861005933809624228
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1051247950742112133}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 06a2437cc09f61243839283dc1755643, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  syncDirection: 0
+  syncMode: 0
+  syncInterval: 0
+--- !u!114 &-6789886380839430824
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -51,27 +87,6 @@ MonoBehaviour:
   serverOnly: 0
   visibility: 0
   hasSpawned: 0
---- !u!114 &7819807498644899279
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1051247950742112133}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8c05c86500a85e44894f9b77786b312b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  syncDirection: 0
-  syncMode: 0
-  syncInterval: 0
-  _PaintableRenderers:
-  - {fileID: 5160764131419926652}
-  - {fileID: 7107081361234156113}
-  _ViewTransform: {fileID: 3091319898584910651}
-  _MoveSpeed: 10
-  _PlayerRadius: 0.5
 --- !u!1 &3446189589253634128
 GameObject:
   m_ObjectHideFlags: 0

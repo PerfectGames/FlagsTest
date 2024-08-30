@@ -9,8 +9,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2120737386876592353}
-  - component: {fileID: -4026428579996270647}
   - component: {fileID: 3266099321836024782}
+  - component: {fileID: 7856843803583083308}
+  - component: {fileID: -584856670839135162}
   m_Layer: 0
   m_Name: P_FLag
   m_TagString: Untagged
@@ -36,7 +37,39 @@ Transform:
   - {fileID: 6914794941708986211}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &-4026428579996270647
+--- !u!114 &3266099321836024782
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 312421386110379550}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 170b8f25527750d469d8b207a4b29ec8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _PaintableRenderers:
+  - {fileID: 2844319301904682719}
+  - {fileID: 8290545434677613684}
+  - {fileID: 7489152144591205331}
+  _RadiusTransform: {fileID: 2369351248414011645}
+--- !u!114 &7856843803583083308
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 312421386110379550}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 58e1e624423e03b4a8d20fe04b9bffd9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  syncDirection: 0
+  syncMode: 0
+  syncInterval: 0
+--- !u!114 &-584856670839135162
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -53,26 +86,6 @@ MonoBehaviour:
   serverOnly: 0
   visibility: 0
   hasSpawned: 0
---- !u!114 &3266099321836024782
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 312421386110379550}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 170b8f25527750d469d8b207a4b29ec8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  syncDirection: 0
-  syncMode: 0
-  syncInterval: 0
-  _PaintableRenderers:
-  - {fileID: 2844319301904682719}
-  - {fileID: 8290545434677613684}
-  - {fileID: 7489152144591205331}
-  _RadiusTransform: {fileID: 2369351248414011645}
 --- !u!1 &7339057174747489262
 GameObject:
   m_ObjectHideFlags: 0

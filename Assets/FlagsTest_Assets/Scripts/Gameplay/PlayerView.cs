@@ -6,37 +6,42 @@ namespace FlagsTest
     {
         [SerializeField] Transform _ViewTransform;
         [SerializeField] float _MoveSpeed = 10f;
+        [SerializeField] float _InterpolationViewSpeed = 10f;
         [SerializeField] float _PlayerRadius = 0.5f;
+        [SerializeField] float _SqrMagnitudeForImmediatelyMove = 25;
 
-        public Transform ViewTransform => _ViewTransform;
+        public IControl Control { get; set; }
+        public float GetMoveSpeed => _MoveSpeed;
 
-        Vector2 _InterpolationOffset;
-        Vector2 InterpolationOffset
+        bool HasMoveControl => Control != null && Control.Move.sqrMagnitude > 0;
+
+        public override void VisualUpdate ()
         {
-            get { return _InterpolationOffset; }
-            set
+            base.VisualUpdate ();
+
+            float sqrDistance = (Position - transform.position).sqrMagnitude;
+            if (sqrDistance > _SqrMagnitudeForImmediatelyMove)
             {
-                _InterpolationOffset = value;
-                ViewTransform.localPosition = ViewTransform.InverseTransformDirection (new Vector3 (value.x, 0, value.y));
+
+                transform.position = Position;
             }
-        }
-
-        void UpdateInterpolationLogic ()
-        {
-            if (Control != null && Control.Move.sqrMagnitude > 0)
+            else if (sqrDistance > 0)
             {
-                InterpolationOffset += Control.Move * _MoveSpeed * Time.deltaTime;
+                transform.position = Vector3.Lerp (transform.position, Position, _InterpolationViewSpeed * Time.deltaTime);
+            }
+
+            if (HasMoveControl)
+            {
+                transform.rotation = Quaternion.AngleAxis (-Vector3.SignedAngle (Control.Move.ToVector3(), Vector3.forward, Vector3.up), Vector3.up);
             }
         }
 
         void FixedUpdateMoveLogic ()
         {
-            if (Control != null && Control.Move.sqrMagnitude > 0)
+            if (HasMoveControl)
             {
-                Vector3 deltaPos = new Vector3 (Control.Move.x, 0, Control.Move.y) * _MoveSpeed * Time.fixedDeltaTime;
-                transform.rotation = Quaternion.AngleAxis (-Vector3.SignedAngle (deltaPos, Vector3.forward, Vector3.up), Vector3.up);
-                transform.position = GameController.Instance.CheckZoneCollision (transform.position + deltaPos, _PlayerRadius);
-                InterpolationOffset = Vector2.zero;
+                Vector3 deltaPos = Control.Move.ToVector3() * _MoveSpeed * Time.deltaTime;
+                Position = GameEntity.Instance.CheckZoneCollision (Position + deltaPos, _PlayerRadius);
             }
         }
     }

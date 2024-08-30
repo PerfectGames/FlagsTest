@@ -26,6 +26,11 @@ namespace FlagsTest
 
         public int TeamsCount => _Teams.Length;
 
+        public Team GetTeam (int index)
+        {
+            return _Teams[index].Team;
+        }
+
         public IEnumerable<Team> Teams
         {
             get

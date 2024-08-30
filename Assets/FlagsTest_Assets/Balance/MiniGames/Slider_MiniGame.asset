@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 313945475a6c3d24ebccea2ea7d5c29e, type: 3}
   m_Name: Slider_MiniGame
   m_EditorClassIdentifier: 
-  <MiniGameProbability>k__BackingField: 1
+  <MiniGameProbability>k__BackingField: 0.5
   <MiniGameDuration>k__BackingField: 3
   <PenaltyDuration>k__BackingField: 3
   <SliderLoopsPerSecond>k__BackingField: 1

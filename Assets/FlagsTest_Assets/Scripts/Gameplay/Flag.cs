@@ -9,17 +9,37 @@ namespace FlagsTest
         [SerializeField] Transform _RadiusTransform;
 
         public event Action<Flag> OnCaptureFlagAction;
+        public Player EnemyPlayer { get; private set; }
         public bool InProtected { get; private set; }
         public float Radius { get; private set; }
-        public Player EnemyPlayer { get; private set; }
-        public float CaptureFlagPercent { get; private set; }
-
+        public bool InCapture { get; private set; }
+        public Color EnemyTeamColor { get; set; }
+        public float CaptureFlagPercent { get; set; }
         HashSet<Player> PlayersInRadius = new HashSet<Player>();
         float CaptureFlagTimer;
 
-        protected override void FixedUpdate ()
+        public override Vector3 Position 
+        { 
+            get => base.Position; 
+            set
+            {
+                base.Position = value;
+                transform.position = value;
+            }
+        }
+
+        protected override void Awake ()
         {
-            base.FixedUpdate ();
+            base.Awake ();
+
+            Radius = WL.SelectedLevel.FlagRadius;
+            _RadiusTransform.localScale = Vector3.one * Radius * 2;
+            OnCaptureFlagAction += GameEntity.Instance.OnCaptureFlag;
+        }
+
+        public override void LogicUpdate ()
+        {
+            base.LogicUpdate ();
 
             FixedUpdateCaptureLogic ();
         }
@@ -45,11 +65,14 @@ namespace FlagsTest
                 {
                     CaptureFlagPercent = 1 - CaptureFlagTimer / WL.SelectedLevel.CaptureFlagDuration;
                 }
+
+                InCapture = true;
             }
             else
             {
                 CaptureFlagTimer = WL.SelectedLevel.CaptureFlagDuration;
                 CaptureFlagPercent = 0;
+                InCapture = false;
             }
         }
 
@@ -63,16 +86,11 @@ namespace FlagsTest
         {
             if (EnemyPlayer == player)
             {
+                MiniGamesManager.Instance.TryStopMiniGameForPlayer (EnemyPlayer);
                 EnemyPlayer = null;
             }
             PlayersInRadius.Remove (player);
             CheckPlayers ();
-        }
-
-        public void SetRadius (float radius)
-        {
-            Radius = radius;
-            _RadiusTransform.localScale = Vector3.one * radius * 2;
         }
 
         void CheckPlayers ()
@@ -87,7 +105,8 @@ namespace FlagsTest
                 else if (EnemyPlayer == null)
                 {
                     EnemyPlayer = p;
-                    GameController.Instance.TryStartMiniGameForPlayer (EnemyPlayer);
+                    EnemyTeamColor = EnemyPlayer.TeamColor;
+                    MiniGamesManager.Instance.ServerStartMiniGameWithProbability (EnemyPlayer);
                 }
             }
         }

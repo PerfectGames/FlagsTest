@@ -2,10 +2,6 @@
 
 namespace FlagsTest
 {
-    /// <summary>
-    /// Links to resources.
-    /// </summary>
-
     [CreateAssetMenu (fileName = "ResourcesSettings", menuName = "GameBalance/Settings/ResourcesSettings")]
     public class ResourcesSettings :ScriptableObject
     {

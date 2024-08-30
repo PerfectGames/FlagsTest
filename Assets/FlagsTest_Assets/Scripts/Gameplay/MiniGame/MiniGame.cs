@@ -3,18 +3,23 @@ using UnityEngine;
 
 namespace FlagsTest
 {
-    public class MiniGame
+    public class MiniGame: ILogicUpdatable
     {
         public Player Player { get; private set; }
+        public Flag Flag { get; private set; }
         public MiniGameDescription MiniGameDescription { get; private set; }
         public bool IsCompleted { get; private set; }
 
-
         Action<MiniGame, bool> ResultCallBack;
-        protected float Timer;
+        public float Timer {  get; private set; }
 
-        public virtual void FixedUpdate ()
+        public virtual void LogicUpdate ()
         {
+            if (IsCompleted)
+            {
+                return;
+            }
+
             Timer += Time.deltaTime;
             if (Timer >= MiniGameDescription.MiniGameDuration)
             {
@@ -29,9 +34,26 @@ namespace FlagsTest
             ResultCallBack = callBack;
         }
 
+        public virtual void CheckResult (float endTime) { }
+
         protected virtual void OnCompleteMiniGame (bool success)
         {
-            ResultCallBack?.Invoke(this, success);
+            if (!IsCompleted)
+            {
+                ResultCallBack?.Invoke (this, success);
+                IsCompleted = true;
+            }
+        }
+
+        public void FailMinigame ()
+        {
+            if (!IsCompleted)
+                OnCompleteMiniGame (false);
+        }
+
+        public void CompleteWithoutCallBack ()
+        {
+            ResultCallBack = null;
             IsCompleted = true;
         }
     }

@@ -6,13 +6,11 @@ namespace FlagsTest
     {
         [SerializeField] float _CameraLerpSpeed = 10;
 
-        Transform targetTransform;
-
         void LateUpdate ()
         {
-            if (Player)
+            if (IsInited)
             {
-                transform.position = Vector3.Lerp (transform.position, Player.ViewTransform.position, _CameraLerpSpeed * Time.deltaTime);
+                transform.position = Vector3.Lerp (transform.position, Player.transform.position, _CameraLerpSpeed * Time.deltaTime);
             }
         }
     }

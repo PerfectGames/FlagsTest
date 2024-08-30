@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace FlagsTest
@@ -7,18 +6,11 @@ namespace FlagsTest
     {
         public Flag InRadiusFlag { get; set; }
         public bool InPenalty => PenaltyTimer > 0;
-        public IControl Control { get; set; }
+        public float PenaltyTimer { get; set; }
 
-        float PenaltyTimer;
-
-        void LateUpdate ()
+        public override void LogicUpdate ()
         {
-            UpdateInterpolationLogic ();
-        }
-
-        protected override void FixedUpdate ()
-        {
-            base.FixedUpdate ();
+            base.LogicUpdate ();
 
             FixedUpdateMiniGameLogic ();
             FixedUpdateMoveLogic ();
@@ -26,7 +18,7 @@ namespace FlagsTest
 
         public void ActivatePenalty (float duration)
         {
-            PenaltyTimer = duration;
+            PenaltyTimer += duration;
         }
 
         void FixedUpdateMiniGameLogic ()
